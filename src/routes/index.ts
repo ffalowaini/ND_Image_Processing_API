@@ -1,4 +1,4 @@
-import express , {Request, Response}from 'express';
+import express, { Request, Response } from 'express';
 import image from './api/image';
 
 const routes = express.Router();

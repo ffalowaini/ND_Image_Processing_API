@@ -5,10 +5,14 @@ export const validateFileName = (
   res: Response,
   next: NextFunction
 ) => {
-  const { fileName } = req.query;
+  const { fileName, height, width } = req.query;
 
   if (fileName) {
-    next();
+    if (!(Number.isNaN(height) && Number.isNaN(width))) {
+      next();
+    } else {
+      return res.status(404).send('please add a valid height and width');
+    }
   } else {
     return res.status(404).send('no FileName found in prameters');
   }

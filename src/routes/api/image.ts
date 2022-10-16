@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
-import sharp from 'sharp';
 import { validateFileName } from '../../middlewares/validateFileName';
+import handelImageProccessing from './utilities';
 
 const image = Router();
 
@@ -16,28 +16,14 @@ image.get('/', validateFileName, (req: Request, res: Response) => {
       `${fileName}.jpg`
     );
     if (width && height) {
-      const thumbilURL = path.join(
-        __dirname,
-        '../../../assets/images/thumbil/',
-        `${fileName}${height}_${width}.jpg`
+      const res1 = handelImageProccessing(
+        fileName as string,
+        Number(width),
+        Number(height)
       );
-      if (fs.existsSync(thumbilURL)) {
-        res.status(200);
-        res.sendFile(thumbilURL);
-      } else {
-        sharp(fullURL)
-          .resize(Number(width), Number(height))
-          .toFile(thumbilURL, () => {
-            res.status(304);
-            res.sendFile(thumbilURL);
-          });
-      }
+      res.status(res1?.code as number);
+      res.sendFile(res1?.url as string);
     } else {
-      const fullURL = path.join(
-        __dirname,
-        '../../../assets/images/full/',
-        `${fileName}.jpg`
-      );
       if (fs.existsSync(fullURL)) {
         res.status(304);
         res.sendFile(fullURL);
