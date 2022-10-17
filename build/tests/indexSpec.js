@@ -41,14 +41,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
+var utilities_1 = __importDefault(require("../routes/api/utilities"));
 var request = (0, supertest_1.default)(index_1.default);
 describe('Testing Image Processing Endpoints', function () {
     it('Testing render existing image', function () { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/image?fileName=encenadaport').expect(304)];
+                case 0: return [4 /*yield*/, request.get('/api/image?fileName=encenadaport').expect(200)];
                 case 1:
                     _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('Testing Image Processing Function', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _a = expect;
+                    return [4 /*yield*/, (0, utilities_1.default)('fjord', 200, 200).then(function (res) {
+                            return { code: res.code, url: res.url };
+                        })];
+                case 1:
+                    _a.apply(void 0, [_b.sent()]).toEqual({ code: 200, url: '/Users/faisalal/Desktop/projects/Node/express/assets/images/thumbnail/fjord200_200.jpg' });
                     return [2 /*return*/];
             }
         });
