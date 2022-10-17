@@ -8,12 +8,23 @@ export const validateFileName = (
   const { fileName, height, width } = req.query;
 
   if (fileName) {
-    if (!(Number.isNaN(height) && Number.isNaN(width))) {
-      next();
+    const heightNum = Number(height);
+    const widthNum = Number(width);
+
+    if (!(isNaN(heightNum) || isNaN(widthNum))) {
+      if (heightNum <= 0 || widthNum <= 0) {
+        console.log('invalid height & width');
+        return res.status(404).send('please enter a valid height and width');
+      } else {
+        console.log('valid height & width');
+        next();
+      }
     } else {
-      return res.status(404).send('please add a valid height and width');
+      console.log('invalid height & width');
+      return res.status(404).send('please enter a valid height and width');
     }
   } else {
+    console.log('no FileName found in prameters');
     return res.status(404).send('no FileName found in prameters');
   }
 };
