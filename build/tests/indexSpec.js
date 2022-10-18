@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var path_1 = __importDefault(require("path"));
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
 var utilities_1 = __importDefault(require("../routes/api/utilities"));
@@ -64,7 +65,7 @@ describe('Testing Image Processing Endpoints', function () {
                             return { code: res.code, url: res.url };
                         })];
                 case 1:
-                    _a.apply(void 0, [_b.sent()]).toEqual({ code: 200, url: '/Users/faisalal/Desktop/projects/Node/express/assets/images/thumbnail/fjord200_200.jpg' });
+                    _a.apply(void 0, [_b.sent()]).toEqual({ code: 200, url: path_1.default.join(__dirname, '/../../assets/images/thumbnail/fjord200_200.jpg') });
                     return [2 /*return*/];
             }
         });

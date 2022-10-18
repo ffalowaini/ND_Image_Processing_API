@@ -1,3 +1,4 @@
+import path from 'path';
 import supertest from 'supertest';
 import app from '../index';
 import handelImageProccessing from '../routes/api/utilities';
@@ -13,7 +14,7 @@ describe('Testing Image Processing Endpoints', () => {
       await handelImageProccessing('fjord', 200, 200).then((res) => {
         return { code: res.code, url: res.url };
       })
-    ).toEqual({ code: 200, url: '/Users/faisalal/Desktop/projects/Node/express/assets/images/thumbnail/fjord200_200.jpg' });
+    ).toEqual({ code: 200, url: path.join(__dirname , '/../../assets/images/thumbnail/fjord200_200.jpg') });
   });
   it('Testing render unexisting image', async () => {
     await request.get('/api/image?fileName=enaport').expect(401);
